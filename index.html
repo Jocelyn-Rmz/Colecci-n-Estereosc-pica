@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Colección Estereoscópica</title>
+  <meta name="description" content="Visualización 3D profesional en anaglifo (rojo/cian) y side-by-side. Catálogo por disparidad, carrusel, zoom y presentación.">
+  <meta name="theme-color" content="#0a58ca"/>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/logo.svg"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <div class="position-fixed top-0 end-0 p-3" style="z-index:2000" id="toastPlace"></div>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-tech sticky-top shadow-sm">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="#top">
+        <img src="assets/icons/logo.svg" width="24" height="24" alt="logo"> Colección Estereoscópica
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="navMain">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#instrucciones">Cómo ver</a></li>
+          <li class="nav-item"><a class="nav-link" href="#carrusel">Presentación</a></li>
+          <li class="nav-item"><a class="nav-link" href="#galeria">Catálogo</a></li>
+          <li class="nav-item"><a class="nav-link" href="#demo-disparidad">Distinguir disparidad</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="py-5 bg-gradient-tech text-white">
+    <div class="container text-center">
+      <h1 class="display-6 fw-bold">Colección Estereoscópica</h1>
+      <p class="lead mb-4">Explora la profundidad del color y la forma a través de imágenes 3D en Anaglifo (rojo/cian) y Side-by-Side.</p>
+      <div class="d-flex flex-wrap justify-content-center gap-3">
+        <a href="#galeria" class="btn btn-primary btn-lg">Explorar catálogo</a>
+        <a href="#carrusel" class="btn btn-outline-light btn-lg">Iniciar presentación</a>
+      </div>
+      <div class="d-flex justify-content-center gap-4 mt-4 small text-white-50">
+        <div><span class="h5 mb-0" id="totalScenes">15</span> escenas</div>
+     
+      </div>
+    </div>
+  </header>
+
+  <section id="instrucciones" class="container my-5">
+    <div class="row g-4 align-items-stretch">
+      <div class="col-lg-6">
+        <div class="card glass h-100 border-0 shadow-sm glass-strong">
+          <div class="card-body">
+            <h2 class="h5 mb-3">Ver en Anaglifo (Rojo/Cian)</h2>
+            <ol class="mb-3 instr">
+              <li>Lentes: <strong>rojo = ojo izquierdo</strong>, <strong>cian = ojo derecho</strong>.</li>
+              <li>Abre una escena y elige <strong>Anaglifo</strong> en el modal.</li>
+              <li>Usa <strong>pantalla completa</strong> para mejor efecto.</li>
+            </ol>
+            <button class="btn btn-primary btn-sm" data-action="scroll-galeria">Ir a la galería</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card glass h-100 border-0 shadow-sm glass-strong">
+          <div class="card-body">
+            <h2 class="h5 mb-3">Ver en Side-by-Side (L | R)</h2>
+            <ol class="mb-3 instr">
+              <li>En el modal cambia a <strong>SBS</strong>.</li>
+              <li>Usa visor <strong>Cardboard/VR</strong> o fusión visual.</li>
+              <li>Pulsa <strong>Intercambiar L/R</strong> si lo ves invertido.</li>
+            </ol>
+            <button class="btn btn-outline-primary btn-sm" data-action="scroll-galeria">Explorar escenas</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="carrusel" class="container my-5">
+    <h2 class="h5 text-white-50 mb-3 text-center">Presentación (Anaglifos)</h2>
+    <div class="card glass border-0 shadow-sm">
+      <div class="card-body">
+        <div id="carouselMain" class="carousel slide" data-bs-ride="false" aria-label="Carrusel">
+          <div class="carousel-indicators" id="carousel-indicators"></div>
+          <div class="carousel-inner" id="carousel-inner"></div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselMain" data-bs-slide="prev" aria-label="Anterior"><span class="carousel-control-prev-icon"></span><span class="visually-hidden">Anterior</span></button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselMain" data-bs-slide="next" aria-label="Siguiente"><span class="carousel-control-next-icon"></span><span class="visually-hidden">Siguiente</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="galeria" class="container my-5">
+    <h2 class="h5 text-white-50 mb-4">Catálogo por disparidad</h2>
+    <ul class="nav nav-pills gap-2 mb-4" role="tablist">
+      <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#panePos" type="button">Positiva</button></li>
+      <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#paneNeg" type="button">Negativa</button></li>
+      <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#paneNul" type="button">Nula</button></li>
+    </ul>
+    <div class="tab-content">
+      <div id="panePos" class="tab-pane fade show active"><div class="row g-4" id="gridPos"></div></div>
+      <div id="paneNeg" class="tab-pane fade"><div class="row g-4" id="gridNeg"></div></div>
+      <div id="paneNul" class="tab-pane fade"><div class="row g-4" id="gridNul"></div></div>
+    </div>
+  </section>
+
+  <!-- DEMO (igual que antes, la dejo para no alargar) -->
+  <section id="demo-disparidad" class="container my-5">
+    <div class="card glass border-0 shadow-sm">
+      <div class="card-body">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-3">
+          <h2 class="h5 m-0">Cómo distinguir la disparidad (demo interactiva)</h2>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-primary" id="demoModeAnag">Anaglifo</button>
+            <button type="button" class="btn btn-outline-primary" id="demoModeSBS">Side-by-Side</button>
+          </div>
+        </div>
+        <div class="row g-4">
+          <div class="col-lg-7">
+            <div class="demo-canvas">
+              <div id="demoAnag" class="demo-anag">
+                <div class="layer layer-red"></div>
+                <div class="layer layer-cyan"></div>
+                <div class="demo-label">Anaglifo • rojo (izq) / cian (der)</div>
+              </div>
+              <div id="demoSBS" class="demo-sbs d-none">
+                <div class="panel panel-left"><div class="mark">L</div></div>
+                <div class="panel panel-right"><div class="mark">R</div></div>
+                <div class="demo-label">Side-by-Side • mover separación</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-5">
+            <div class="vstack gap-3">
+              <div>
+                <label class="form-label small text-secondary">Tipo de disparidad</label>
+                <div class="btn-group w-100" role="group">
+                  <input type="radio" class="btn-check" name="demoType" id="tPos" checked><label class="btn btn-outline-light" for="tPos">Positiva</label>
+                  <input type="radio" class="btn-check" name="demoType" id="tNul"><label class="btn btn-outline-light" for="tNul">Nula</label>
+                  <input type="radio" class="btn-check" name="demoType" id="tNeg"><label class="btn btn-outline-light" for="tNeg">Negativa</label>
+                </div>
+              </div>
+              <div>
+                <label for="demoSep" class="form-label small text-secondary d-flex justify-content-between"><span>Separación</span><span id="demoSepVal">16 px</span></label>
+                <input type="range" class="form-range" min="0" max="64" value="16" id="demoSep">
+              </div>
+              <div class="small text-white-50">
+                <ul class="small m-0 ps-3">
+                  <li><strong>Positiva:</strong> rojo a la izquierda del cian (anaglifo). En SBS, R más a la derecha.</li>
+                  <li><strong>Negativa:</strong> rojo a la derecha del cian. En SBS, R más a la izquierda.</li>
+                  <li><strong>Nula:</strong> bordes coinciden (sin separación).</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div><!-- /row -->
+      </div>
+    </div>
+  </section>
+
+  <footer id="contacto" class="footer-tech mt-5">
+    <div class="container py-5">
+      <div class="row g-4 align-items-start">
+        <div class="col-md-5">
+          <div class="d-flex align-items-center gap-2 mb-2"><img src="assets/icons/logo.svg" width="28" height="28" alt="logo"><span class="fw-semibold">Colección Estereoscópica</span></div>
+
+          <div class="small text-white-50">© <span id="y"></span> TecNM — Todos los derechos reservados.</div>
+        </div>
+        <div class="col-md-4">
+          <h6 class="fw-semibold mb-2">Enlaces</h6>
+          <ul class="list-unstyled small m-0">
+            <li><a class="link-light-opacity" href="#instrucciones">Cómo ver</a></li>
+            <li><a class="link-light-opacity" href="#carrusel">Presentación</a></li>
+            <li><a class="link-light-opacity" href="#galeria">Catálogo</a></li>
+            <li><a class="link-light-opacity" href="#demo-disparidad">Distinguir disparidad</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <h6 class="fw-semibold mb-2">Contacto</h6>
+          <ul class="list-unstyled small m-0">
+            <li>Jocelyn Ramírez Pérez</li>
+            <li><a class="link-light" href="mailto:l21200663@pachuca.tecnm.mx">l21200663@pachuca.tecnm.mx</a></li>
+          </ul>
+        </div>
+      </div>
+      
+    </div>
+  </footer>
+
+  <!-- MODAL -->
+  <div class="modal fade" id="sceneModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content bg-dark text-light rounded-4">
+        <div class="modal-header">
+          <h5 class="modal-title" id="sceneTitle">Vista de escena</h5>
+          <div class="btn-group me-2">
+            <button class="btn btn-outline-light btn-sm dropdown-toggle" data-bs-toggle="dropdown">Descargar</button>
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
+              <li><a class="dropdown-item" href="#" id="dlAnag">Anaglifo (.jpg)</a></li>
+              <li><a class="dropdown-item" href="#" id="dlLeft">Izquierda (.jpg)</a></li>
+              <li><a class="dropdown-item" href="#" id="dlRight">Derecha (.jpg)</a></li>
+            </ul>
+          </div>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div id="controlsBar" class="d-flex flex-wrap align-items-center gap-2 mb-3">
+            <div class="btn-group" role="group">
+              <button type="button" class="btn btn-primary" data-mode="anaglyph">Anaglifo</button>
+              <button type="button" class="btn btn-outline-primary" data-mode="sbs">Side-by-Side</button>
+            </div>
+            <button class="btn btn-outline-light" id="btnSwap" disabled>Intercambiar L/R</button>
+            <div class="d-flex align-items-center ms-auto gap-2">
+              <button class="btn btn-outline-light" id="btnFit">Ajuste: Auto</button>
+              <label class="small text-secondary">Separación</label>
+              <input type="range" id="sep" min="0" max="64" value="16">
+              <button class="btn btn-light" id="btnFull">Pantalla completa</button>
+              <button class="btn btn-outline-info" id="btnShare">Compartir</button>
+            </div>
+          </div>
+          <div id="modalSpinner" class="d-flex justify-content-center align-items-center py-3 d-none">
+            <div class="spinner-border text-primary" role="status"></div>
+          </div>
+          <div id="viewAnaglyph" class="stage d-none"><img id="imgA" alt="Anaglifo" loading="eager" decoding="async"></div>
+          <div id="viewSBS" class="stage sbs-grid d-none">
+            <img id="imgL" alt="Left" loading="eager" decoding="async">
+            <img id="imgR" alt="Right" loading="eager" decoding="async">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <small class="text-secondary me-auto">Usa ← → para navegar</small>
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="zoomOverlay" class="zoom-overlay d-none" aria-hidden="true">
+    <button class="btn btn-light btn-sm zoom-close">✕</button>
+    <img id="zoomImg" alt="Anaglifo ampliado">
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

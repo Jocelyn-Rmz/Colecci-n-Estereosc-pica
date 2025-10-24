@@ -1,0 +1,11 @@
+{
+  "name": "STEREO-APP",
+  "short_name": "StereoApp",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0a1426",
+  "theme_color": "#0a58ca",
+  "icons": [
+    { "src": "assets/icons/logo.svg", "sizes": "512x512", "type": "image/svg+xml" }
+  ]
+}
