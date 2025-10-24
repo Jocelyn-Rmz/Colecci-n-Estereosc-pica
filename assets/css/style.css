@@ -21,7 +21,7 @@ a{text-decoration:none}
   border:1px solid var(--glass-bd)!important; border-radius:1rem}
 .glass-strong .card-body,
 .glass-strong h2,
-.glass-strong li{color:#f1f6ff!important}         /* ← CONTRASTE FUERTE EN INSTRUCCIONES */
+.glass-strong li{color:#f1f6ff!important}
 .instr{line-height:1.55}
 .instr strong{color:#ffffff}
 
@@ -29,7 +29,7 @@ a{text-decoration:none}
 .card-hover{transition:transform .25s, box-shadow .25s}
 .card-hover:hover{transform:translateY(-2px); box-shadow:0 12px 28px rgba(0,0,0,.35)}
 .card-img-top{
-  width:100%; height:260px; object-fit:contain;     /* ← NO RECORTAR MINIATURAS */
+  width:100%; height:260px; object-fit:contain;
   background:#0b1424; border-top-left-radius:1rem; border-top-right-radius:1rem
 }
 @media (min-width:992px){.card-img-top{height:300px}}
@@ -40,10 +40,13 @@ a{text-decoration:none}
 @keyframes shimmer{100%{transform:translateX(100%)}}
 .lazy{filter:blur(8px); transition:filter .3s}.lazy[src]{filter:blur(0)}
 
-/* ===== Stage (contenedor de imagen) ===== */
-.stage{width:100%; display:grid; place-items:center; border-radius:.75rem; background:#000}
+/* ===== Stage (visualizador de imagen) ===== */
+.stage{
+  width:100%; display:grid; place-items:center; border-radius:.75rem; background:#000;
+  overflow:visible; /* <- no recortar */
+}
 .stage img{
-  width:auto; height:auto; max-width:100%; max-height:100%; object-fit:contain; /* ← SIEMPRE COMPLETA */
+  width:auto!important; height:auto!important; max-width:100%; max-height:var(--stageMax, 70vh); object-fit:contain;
 }
 
 /* ===== SBS ===== */
@@ -51,10 +54,13 @@ a{text-decoration:none}
 .sbs-grid img{width:100%; height:auto}
 @media (min-width:768px){.sbs-grid{grid-template-columns:1fr 1fr}}
 
-/* ===== Carrusel (IMAGEN COMPLETA y sin cortes) ===== */
-#carouselMain .carousel-item{display:flex; align-items:center; justify-content:center}
-#carouselMain .stage{height:auto; max-width:95vw; margin:0 auto; padding:0}  /* ← altura no fija */
-#carouselMain .stage img{max-height:70vh}                                      /* ← limita a viewport */
+/* ===== Carrusel ===== */
+#carouselMain{max-width:90vw; margin:0 auto}
+#carouselMain .carousel-item{
+  display:flex; align-items:center; justify-content:center; width:100%; /* ocupar todo el ancho */
+}
+#carouselMain .stage{height:auto; max-width:95vw; margin:0 auto; padding:0}
+#carouselMain .stage img{max-height:70vh; object-fit:contain}
 .carousel-control-prev-icon,.carousel-control-next-icon{filter:invert(1)}
 
 /* ===== Zoom overlay ===== */
@@ -89,34 +95,3 @@ a{text-decoration:none}
 /* ===== Footer ===== */
 .footer-tech{background:radial-gradient(700px 500px at 90% 0%, rgba(10,88,202,.28), transparent 60%), #0b1220; color:#e9eef7}
 .link-light-opacity{color:#cfe3ff}.link-light-opacity:hover{color:#fff; text-decoration:underline}
-/* === Anti-recorte general === */
-.stage{
-  width:100%;
-  display:grid;
-  place-items:center;
-  /* antes: overflow:hidden;  -> esto recortaba */
-  overflow:visible;
-  border-radius:.75rem;
-  background:#000;
-}
-
-/* El alto disponible lo define --stageMax que ajustaremos por JS */
-.stage img{
-  width:auto !important;
-  height:auto !important;
-  max-width:100%;
-  max-height:var(--stageMax, 70vh); /* fallback por si JS no corre */
-  object-fit:contain;
-}
-
-/* Carrusel: imagen siempre completa */
-#carouselMain .carousel-item{display:flex; align-items:center; justify-content:center}
-#carouselMain .stage{height:auto; max-width:95vw; margin:0 auto; padding:0}
-#carouselMain .stage img{max-height:70vh}
-/* Carrusel: cada slide ocupa todo el ancho (si no, puede quedarse “pegado”) */
-#carouselMain .carousel-item{
-  display:flex;               /* centrado vertical/horizontal */
-  align-items:center;
-  justify-content:center;
-  width:100%;                 /* <- clave para que deslice siempre */
-}

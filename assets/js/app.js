@@ -66,7 +66,7 @@ function renderGrid(ids, containerId){
   cont.querySelectorAll('img.lazy').forEach(img=>io.observe(img));
 }
 
-/* ===== Carrusel (la imagen se ajusta por CSS con object-fit: contain) ===== */
+/* ===== Carrusel ===== */
 function buildIndicators(len){
   const f=document.createDocumentFragment();
   for(let i=0;i<len;i++){
@@ -81,7 +81,7 @@ function buildCarouselInner(){
   IDS.forEach((id,idx)=>{
     const item=document.createElement('div'); item.className=`carousel-item ${idx===0?'active':''}`;
     const wrap=document.createElement('div'); wrap.className='stage';
-    const img=document.createElement('img'); img.dataset.src=PATHS.A(id); img.alt=`Anaglifo ${id}`; img.className='lazy';
+    const img=document.createElement('img'); img.dataset.src=PATHS.A(id); img.alt=`Anaglifo ${id}`; img.className='lazy d-block w-100';
     img.addEventListener('click',()=>openZoom(PATHS.A(id),`Anaglifo ${id}`));
     wrap.appendChild(img); item.appendChild(wrap); f.appendChild(item);
     setTimeout(()=>io.observe(img),0);
@@ -89,10 +89,23 @@ function buildCarouselInner(){
   return f;
 }
 function mountCarousel(){
-  $('#carousel-indicators').innerHTML='';
-  $('#carousel-inner').innerHTML='';
-  $('#carousel-indicators').appendChild(buildIndicators(IDS.length));
-  $('#carousel-inner').appendChild(buildCarouselInner());
+  const indicators = $('#carousel-indicators');
+  const inner = $('#carousel-inner');
+  indicators.innerHTML=''; inner.innerHTML='';
+  indicators.appendChild(buildIndicators(IDS.length));
+  inner.appendChild(buildCarouselInner());
+
+  // Inicializar carrusel (automático)
+  const el = document.getElementById('carouselMain');
+  bootstrap.Carousel.getOrCreateInstance(el, {
+    interval: 4000, wrap: true, ride: true, pause: false
+  });
+
+  // Precarga del slide siguiente para evitar “negros”
+  el.addEventListener('slide.bs.carousel', (e) => {
+    const nextImg = e.relatedTarget?.querySelector('img.lazy');
+    if (nextImg && !nextImg.src) nextImg.src = nextImg.dataset.src;
+  });
 }
 
 /* ===== Modal ===== */
@@ -119,18 +132,18 @@ const PREFS={
 };
 function setLoading(on){modalSpinner.classList.toggle('d-none',!on);}
 
-/* ====== Ajuste anti-recorte: calcula alto útil del área de imagen ====== */
+/* ===== Anti-recorte (alto útil en modal) ===== */
 function computeStageMaxPx(){
   const modal = document.querySelector('#sceneModal .modal-content');
   const header = document.querySelector('#sceneModal .modal-header');
   const footer = document.querySelector('#sceneModal .modal-footer');
-  const controls = document.getElementById('controlsBar'); // si no existe, 0
+  const controls = document.getElementById('controlsBar');
   if(!modal || !header || !footer) return 0;
   const modalH    = modal.clientHeight;
   const headerH   = header.offsetHeight || 0;
   const footerH   = footer.offsetHeight || 0;
   const controlsH = controls ? controls.offsetHeight : 0;
-  const padding   = 16; // colchón
+  const padding   = 16;
   return Math.max(150, modalH - headerH - footerH - controlsH - padding);
 }
 function applyStageMax(){
@@ -141,7 +154,7 @@ function applyStageMax(){
   if(s) s.style.setProperty('--stageMax', `${maxPx}px`);
 }
 
-/* ===== Ajuste de imagen: Auto / Alto / Ancho ===== */
+/* ===== Ajuste Auto / Alto / Ancho ===== */
 function applyFit(mode){
   viewA.classList.remove('fit-height','fit-width','auto');
   viewS.classList.remove('fit-height','fit-width','auto');
@@ -158,7 +171,7 @@ function autoFitByAspect(){
 btnFit.addEventListener('click',()=>{
   const next=PREFS.fit==='auto'?'height':PREFS.fit==='height'?'width':'auto';
   PREFS.fit=next; if(next==='auto') autoFitByAspect(); else applyFit(next);
-  applyStageMax(); // recalcula alto útil
+  applyStageMax();
 });
 
 function setMode(mode){
@@ -171,7 +184,7 @@ function setMode(mode){
     btnModeAnag.classList.replace('btn-primary','btn-outline-primary');
     viewS.classList.remove('d-none'); viewA.classList.add('d-none'); btnSwap.disabled=false;
   } PREFS.mode=mode;
-  applyStageMax(); // cada cambio de modo puede variar alturas
+  applyStageMax();
 }
 btnModeAnag.addEventListener('click',()=>setMode('anaglyph'));
 btnModeSBS .addEventListener('click',()=>setMode('sbs'));
@@ -207,7 +220,6 @@ async function openScene(id,opts={mode:PREFS.mode}){
 
   await Promise.all([preload(imgA.src),preload(imgL.src),preload(imgR.src)]);
 
-  // Ajustes de imagen y alto útil (anti-recorte)
   if(PREFS.fit==='auto') autoFitByAspect(); else applyFit(PREFS.fit);
   applyStageMax();
 
@@ -267,19 +279,3 @@ window.addEventListener('DOMContentLoaded',()=>{
   updateDemo();
   const m=location.hash.match(/scene=(\d{2})/); if(m && IDS.includes(m[1])) openScene(m[1],{mode:PREFS.mode});
 });
-/* Forzar carga del slide siguiente y evitar “pantalla negra” al cambiar */
-const carouselEl = document.getElementById('carouselMain');
-if (carouselEl) {
-  // Inicializa por si el HTML no lo hace automáticamente
-  const bsCarousel = bootstrap.Carousel.getInstance(carouselEl) || new bootstrap.Carousel(carouselEl, {
-    interval: false, wrap: true, ride: false
-  });
-
-  // Al iniciar el cambio de slide, asegúrate de cargar su imagen
-  carouselEl.addEventListener('slide.bs.carousel', (e) => {
-    const nextImg = e.relatedTarget?.querySelector('img.lazy');
-    if (nextImg && !nextImg.src) {
-      nextImg.src = nextImg.dataset.src;
-    }
-  });
-}

@@ -11,14 +11,18 @@
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+  <!-- TOASTS -->
   <div class="position-fixed top-0 end-0 p-3" style="z-index:2000" id="toastPlace"></div>
 
+  <!-- NAV -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-tech sticky-top shadow-sm">
     <div class="container">
       <a class="navbar-brand d-flex align-items-center gap-2" href="#top">
         <img src="assets/icons/logo.svg" width="24" height="24" alt="logo"> Colección Estereoscópica
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain"><span class="navbar-toggler-icon"></span></button>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
+        <span class="navbar-toggler-icon"></span>
+      </button>
       <div class="collapse navbar-collapse" id="navMain">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item"><a class="nav-link" href="#instrucciones">Cómo ver</a></li>
@@ -31,6 +35,7 @@
     </div>
   </nav>
 
+  <!-- HERO -->
   <header class="py-5 bg-gradient-tech text-white">
     <div class="container text-center">
       <h1 class="display-6 fw-bold">Colección Estereoscópica</h1>
@@ -41,11 +46,11 @@
       </div>
       <div class="d-flex justify-content-center gap-4 mt-4 small text-white-50">
         <div><span class="h5 mb-0" id="totalScenes">15</span> escenas</div>
-     
       </div>
     </div>
   </header>
 
+  <!-- INSTRUCCIONES -->
   <section id="instrucciones" class="container my-5">
     <div class="row g-4 align-items-stretch">
       <div class="col-lg-6">
@@ -77,20 +82,28 @@
     </div>
   </section>
 
+  <!-- CARRUSEL -->
   <section id="carrusel" class="container my-5">
     <h2 class="h5 text-white-50 mb-3 text-center">Presentación (Anaglifos)</h2>
     <div class="card glass border-0 shadow-sm">
       <div class="card-body">
-        <div id="carouselMain" class="carousel slide" data-bs-ride="false" aria-label="Carrusel">
+        <div id="carouselMain" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="4000" aria-label="Carrusel">
           <div class="carousel-indicators" id="carousel-indicators"></div>
           <div class="carousel-inner" id="carousel-inner"></div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#carouselMain" data-bs-slide="prev" aria-label="Anterior"><span class="carousel-control-prev-icon"></span><span class="visually-hidden">Anterior</span></button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carouselMain" data-bs-slide="next" aria-label="Siguiente"><span class="carousel-control-next-icon"></span><span class="visually-hidden">Siguiente</span></button>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselMain" data-bs-slide="prev" aria-label="Anterior">
+            <span class="carousel-control-prev-icon"></span>
+            <span class="visually-hidden">Anterior</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselMain" data-bs-slide="next" aria-label="Siguiente">
+            <span class="carousel-control-next-icon"></span>
+            <span class="visually-hidden">Siguiente</span>
+          </button>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- GALERÍA -->
   <section id="galeria" class="container my-5">
     <h2 class="h5 text-white-50 mb-4">Catálogo por disparidad</h2>
     <ul class="nav nav-pills gap-2 mb-4" role="tablist">
@@ -105,7 +118,7 @@
     </div>
   </section>
 
-  <!-- DEMO (igual que antes, la dejo para no alargar) -->
+  <!-- DEMO INTERACTIVA (igual que tenías) -->
   <section id="demo-disparidad" class="container my-5">
     <div class="card glass border-0 shadow-sm">
       <div class="card-body">
@@ -159,12 +172,15 @@
     </div>
   </section>
 
+  <!-- FOOTER -->
   <footer id="contacto" class="footer-tech mt-5">
     <div class="container py-5">
       <div class="row g-4 align-items-start">
         <div class="col-md-5">
-          <div class="d-flex align-items-center gap-2 mb-2"><img src="assets/icons/logo.svg" width="28" height="28" alt="logo"><span class="fw-semibold">Colección Estereoscópica</span></div>
-
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <img src="assets/icons/logo.svg" width="28" height="28" alt="logo">
+            <span class="fw-semibold">Colección Estereoscópica</span>
+          </div>
           <div class="small text-white-50">© <span id="y"></span> TecNM — Todos los derechos reservados.</div>
         </div>
         <div class="col-md-4">
@@ -184,7 +200,6 @@
           </ul>
         </div>
       </div>
-      
     </div>
   </footer>
 
@@ -236,6 +251,7 @@
     </div>
   </div>
 
+  <!-- OVERLAY ZOOM -->
   <div id="zoomOverlay" class="zoom-overlay d-none" aria-hidden="true">
     <button class="btn btn-light btn-sm zoom-close">✕</button>
     <img id="zoomImg" alt="Anaglifo ampliado">
